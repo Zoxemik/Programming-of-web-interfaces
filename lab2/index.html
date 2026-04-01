@@ -1,0 +1,102 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo Lista</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="page">
+        <section class="notebook">
+            <header class="hero">
+                <h1>ToDo Lista</h1>
+            </header>
+
+            <section class="panel">
+                <h2>Dodaj zadanie</h2>
+
+                <div class="row">
+                    <input
+                        id="taskInput"
+                        type="text"
+                        placeholder="Wpisz treść zadania..."
+                        autocomplete="off"
+                    />
+
+                    <select id="listSelect" aria-label="Wybierz listę"></select>
+
+                    <button id="addTaskButton" type="button">Dodaj</button>
+                </div>
+
+                <p id="messageBox" class="message" aria-live="polite"></p>
+            </section>
+
+            <section class="panel">
+                <h2>Dodaj nową listę</h2>
+
+                <div class="row">
+                    <input
+                        id="newListInput"
+                        type="text"
+                        placeholder="Np. Dom, Studia, Zakupy..."
+                        autocomplete="off"
+                    />
+
+                    <button id="addListButton" type="button">Dodaj listę</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Wyszukiwanie</h2>
+
+                <div class="row search-row">
+                    <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Szukaj na żywo..."
+                        autocomplete="off"
+                    />
+
+                    <label class="checkbox">
+                        <input id="caseInsensitiveToggle" type="checkbox" checked />
+                        wyszukiwanie bez rozróżniania wielkości liter
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel tools">
+                <button id="undoButton" type="button" disabled>Cofnij ostatnie usunięcie</button>
+            </section>
+
+            <section class="panel">
+                <h2>Listy</h2>
+                <div id="listsContainer" class="lists"></div>
+            </section>
+        </section>
+    </main>
+
+    <div id="modalOverlay" class="modal-overlay hidden" aria-hidden="true">
+        <div
+            id="confirmDialog"
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalTitle"
+            aria-describedby="modalText"
+            tabindex="-1"
+        >
+            <h3 id="modalTitle">Potwierdzenie usunięcia</h3>
+            <p id="modalText"></p>
+
+            <div class="modal-actions">
+                <button id="cancelDeleteButton" type="button" class="secondary-button">Anuluj</button>
+                <button id="confirmDeleteButton" type="button" class="danger-button">Usuń</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

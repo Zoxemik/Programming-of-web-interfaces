@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pionek i Panika | Szczegóły gry i dodawanie nowej pozycji</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-box">
+        <div class="brand-icon">🧩</div>
+        <div>
+          <p class="eyebrow">Podstrona produktu</p>
+          <h1>Pionek i Panika</h1>
+          <p class="brand-tagline">Szczegóły wybranej gry oraz formularz dodawania nowej pozycji.</p>
+        </div>
+      </div>
+
+      <nav class="top-actions" aria-label="Główne akcje użytkownika">
+        <a class="btn btn-light" href="index.html">Strona główna</a>
+        <a class="btn btn-light" href="#">Zaloguj</a>
+        <a class="btn btn-accent" href="#">Koszyk (3)</a>
+        <a class="btn btn-dark" href="#formularz">Dodaj pozycję</a>
+      </nav>
+    </header>
+
+    <main class="details-page">
+      <section class="detail-layout">
+        <article class="product-detail card">
+          <div class="detail-hero">
+            <div class="detail-art">🚀</div>
+            <div class="detail-copy">
+              <p class="eyebrow">Szczegóły produktu</p>
+              <h2>Terraformacja Marsa</h2>
+              <p class="detail-lead">
+                Rozbudowana gra strategiczna, w której gracze rozwijają korporacje, zarządzają zasobami
+                i wspólnie zmieniają Marsa w planetę zdatną do życia.
+              </p>
+
+              <div class="detail-tags">
+                <span>Strategiczna</span>
+                <span>1-5 graczy</span>
+                <span>120 minut</span>
+                <span>Wiek 12+</span>
+              </div>
+
+              <div class="purchase-box">
+                <div>
+                  <p class="price-note">Cena</p>
+                  <strong class="detail-price">189 zł</strong>
+                </div>
+                <div class="purchase-actions">
+                  <a class="btn btn-accent" href="#">Dodaj do koszyka</a>
+                  <a class="btn btn-light" href="#formularz">Dodaj podobną grę</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <section class="info-card">
+              <h3>Opis gry</h3>
+              <p>
+                Gracze inwestują w projekty, zdobywają punkty za rozwój planety i starają się stworzyć
+                jak najlepiej działającą kombinację kart. To tytuł dla osób, które lubią planowanie,
+                budowanie silniczka ekonomicznego i kilka tur myślenia do przodu.
+              </p>
+            </section>
+
+            <section class="info-card">
+              <h3>Najważniejsze cechy</h3>
+              <ul class="spec-list">
+                <li>dużo decyzji strategicznych</li>
+                <li>wysoka regrywalność</li>
+                <li>klimatyczne ilustracje i tematyka science fiction</li>
+                <li>możliwość gry solo lub w większej grupie</li>
+              </ul>
+            </section>
+
+            <section class="info-card">
+              <h3>Dane techniczne</h3>
+              <div class="tech-grid">
+                <span><strong>Wydawca:</strong> Rebel</span>
+                <span><strong>Stan:</strong> nowa</span>
+                <span><strong>Dostępność:</strong> od ręki</span>
+                <span><strong>Ocena klientów:</strong> 4.8/5</span>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <aside class="add-form card" id="formularz">
+          <div class="section-heading">
+            <p class="eyebrow">Formularz</p>
+            <h2>Dodaj nową pozycję</h2>
+          </div>
+
+          <form class="product-form">
+            <div class="field">
+              <label for="title">Nazwa gry</label>
+              <input id="title" type="text" placeholder="Np. 7 Cudów Świata">
+            </div>
+
+            <div class="field">
+              <label for="description">Krótki opis</label>
+              <textarea id="description" rows="4" placeholder="Opisz, o czym jest gra i dla kogo będzie dobra."></textarea>
+            </div>
+
+            <div class="field-double">
+              <div class="field">
+                <label for="genre">Kategoria</label>
+                <select id="genre">
+                  <option>Strategiczna</option>
+                  <option>Rodzinna</option>
+                  <option>Imprezowa</option>
+                  <option>Kooperacyjna</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="difficulty">Poziom trudności</label>
+                <select id="difficulty">
+                  <option>Łatwy</option>
+                  <option>Średni</option>
+                  <option>Zaawansowany</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-double">
+              <div class="field">
+                <label for="players">Liczba graczy</label>
+                <input id="players" type="text" placeholder="Np. 2-4">
+              </div>
+
+              <div class="field">
+                <label for="time">Czas rozgrywki</label>
+                <input id="time" type="text" placeholder="Np. 45 min">
+              </div>
+            </div>
+
+            <div class="field-double">
+              <div class="field">
+                <label for="price">Cena</label>
+                <input id="price" type="number" placeholder="129">
+              </div>
+
+              <div class="field">
+                <label for="stock">Liczba sztuk</label>
+                <input id="stock" type="number" placeholder="12">
+              </div>
+            </div>
+
+            <div class="checkboxes vertical">
+              <label><input type="checkbox"> Nowość</label>
+              <label><input type="checkbox" checked> Dostępna od ręki</label>
+              <label><input type="checkbox"> Promocja</label>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-accent" type="submit">Zapisz pozycję</button>
+              <button class="btn btn-light" type="reset">Wyczyść formularz</button>
+            </div>
+          </form>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer card">
+      <div>
+        <h3>Co pokazuje ta podstrona?</h3>
+        <p>Widok szczegółów produktu oraz panel dodawania nowej gry do oferty sklepu.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Wróć na stronę główną</a>
+        <a href="#formularz">Formularz dodawania</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

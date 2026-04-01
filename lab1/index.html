@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pionki i Ziomki | Sklep z grami planszowymi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-box">
+        <div class="brand-icon">🎲</div>
+        <div>
+          <p class="eyebrow">Sklep internetowy</p>
+          <h1>Pionki i Ziomki</h1>
+          <p class="brand-tagline">Tu każda planszówka ma szansę wywołać mały dramat.</p>
+        </div>
+      </div>
+
+      <nav class="top-actions" aria-label="Główne akcje użytkownika">
+        <a class="btn btn-light" href="#">Zaloguj</a>
+        <a class="btn btn-light" href="#">Wyloguj</a>
+        <a class="btn btn-accent" href="#">Koszyk (3)</a>
+        <a class="btn btn-dark" href="index2.html">Dodaj nową grę</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-grid">
+        <div class="hero-copy card">
+          <p class="eyebrow">Nowa kolekcja</p>
+          <h2>Planszówki, które rozkręcą wieczór szybciej niż pizza na dowóz</h2>
+          <p>
+            Wyszukaj idealną grę po kategorii, poziomie trudności, liczbie graczy i cenie.
+          </p>
+
+          <div class="hero-badges">
+            <span>🎯 imprezowe</span>
+            <span>🧠 strategiczne</span>
+            <span>👨‍👩‍👧 rodzinne</span>
+            <span>💸 promocje</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-accent" href="#katalog">Przejdź do katalogu</a>
+            <a class="btn btn-light" href="index2.html">Zobacz szczegóły produktu</a>
+          </div>
+        </div>
+
+        <aside class="hero-side card">
+          <div class="promo-row">
+            <div class="promo-tile">
+              <strong>Nowości co tydzień</strong>
+              <p>świeże tytuły prosto na stół</p>
+            </div>
+            <div class="promo-tile">
+              <strong>Ranking graczy</strong>
+              <p>top gry wybierane przez klientów</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="catalog-layout" id="katalog">
+        <aside class="filters card">
+          <div class="section-heading">
+            <p class="eyebrow">Wyszukiwanie</p>
+            <h2>Filtry</h2>
+          </div>
+
+          <form class="filter-form">
+            <div class="field">
+              <label for="search">Nazwa gry</label>
+              <input id="search" type="text" placeholder="Np. Azul, Dixit, Catan">
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="category">Kategoria</label>
+                <select id="category">
+                  <option>Wszystkie</option>
+                  <option>Strategiczne</option>
+                  <option>Rodzinne</option>
+                  <option>Imprezowe</option>
+                  <option>Kooperacyjne</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="players">Liczba graczy</label>
+                <select id="players">
+                  <option>Dowolna</option>
+                  <option>1-2</option>
+                  <option>2-4</option>
+                  <option>4-6</option>
+                  <option>6+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="difficulty">Poziom trudności</label>
+                <select id="difficulty">
+                  <option>Dowolny</option>
+                  <option>Łatwy</option>
+                  <option>Średni</option>
+                  <option>Zaawansowany</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="price">Budżet</label>
+                <select id="price">
+                  <option>Każdy</option>
+                  <option>Do 80 zł</option>
+                  <option>80-150 zł</option>
+                  <option>Powyżej 150 zł</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="checkboxes">
+              <label><input type="checkbox" checked> Dostępne od ręki</label>
+              <label><input type="checkbox"> Tylko promocje</label>
+              <label><input type="checkbox"> Tylko nowości</label>
+            </div>
+
+            <div class="filter-actions">
+              <button class="btn btn-accent" type="submit">Szukaj</button>
+              <button class="btn btn-light" type="reset">Wyczyść</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="results card">
+          <div class="results-top">
+            <div class="section-heading">
+              <p class="eyebrow">Lista produktów</p>
+              <h2>Wyniki wyszukiwania</h2>
+            </div>
+
+            <div class="result-stats">
+              <span>Znaleziono: <strong>6 pozycji</strong></span>
+              <span>Sortuj: <strong>Najpopularniejsze</strong></span>
+            </div>
+          </div>
+
+          <div class="products-grid">
+            <article class="product-card">
+              <div class="product-art">🚀</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Strategiczna</span>
+                  <span class="stock in-stock">Dostępna</span>
+                </div>
+                <h3>Terraformacja Marsa</h3>
+                <p>Rozwijaj korporację, podnoś temperaturę planety i walcz o najlepszy silnik punktujący.</p>
+                <div class="product-meta">
+                  <span>1-5 graczy</span>
+                  <span>120 min</span>
+                  <span>Zaawansowana</span>
+                </div>
+                <div class="card-footer">
+                  <strong>189 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-art">🧱</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Rodzinna</span>
+                  <span class="stock in-stock">Dostępna</span>
+                </div>
+                <h3>Azul</h3>
+                <p>Układaj kafelki, planuj ruchy i udowodnij wszystkim, że symetria daje szczęście.</p>
+                <div class="product-meta">
+                  <span>2-4 graczy</span>
+                  <span>45 min</span>
+                  <span>Średnia</span>
+                </div>
+                <div class="card-footer">
+                  <strong>119 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-art">🌾</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Klasyk</span>
+                  <span class="stock out-stock">Mała ilość</span>
+                </div>
+                <h3>Catan</h3>
+                <p>Zbieraj surowce, handluj i psuj relacje jednym dobrze postawionym złodziejem.</p>
+                <div class="product-meta">
+                  <span>3-4 graczy</span>
+                  <span>75 min</span>
+                  <span>Średnia</span>
+                </div>
+                <div class="card-footer">
+                  <strong>149 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-art">🎨</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Imprezowa</span>
+                  <span class="stock in-stock">Dostępna</span>
+                </div>
+                <h3>Dixit</h3>
+                <p>Piękne ilustracje, skojarzenia i pełna dowolność w tłumaczeniu, czemu ten wybór miał sens.</p>
+                <div class="product-meta">
+                  <span>3-8 graczy</span>
+                  <span>30 min</span>
+                  <span>Łatwa</span>
+                </div>
+                <div class="card-footer">
+                  <strong>99 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-art">🕵️</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Kooperacyjna</span>
+                  <span class="stock in-stock">Dostępna</span>
+                </div>
+                <h3>Tajniacy</h3>
+                <p>Odgaduj hasła, dawaj wskazówki i licz na to, że drużyna tym razem zrozumie, o co chodziło.</p>
+                <div class="product-meta">
+                  <span>4-8 graczy</span>
+                  <span>20 min</span>
+                  <span>Łatwa</span>
+                </div>
+                <div class="card-footer">
+                  <strong>69 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-art">⚔️</div>
+              <div class="product-body">
+                <div class="product-top">
+                  <span class="badge">Fantasy</span>
+                  <span class="stock out-stock">Ostatnie sztuki</span>
+                </div>
+                <h3>Gloomhaven: Szczęki Lwa</h3>
+                <p>Kampania, rozwój postaci i tyle decyzji, że zwykła herbata zamienia się w strategiczną naradę.</p>
+                <div class="product-meta">
+                  <span>1-4 graczy</span>
+                  <span>90 min</span>
+                  <span>Zaawansowana</span>
+                </div>
+                <div class="card-footer">
+                  <strong>239 zł</strong>
+                  <a class="btn btn-dark btn-small" href="index2.html">Szczegóły</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer card">
+      <div class="footer-links">
+        <a href="#katalog">Katalog</a>
+        <a href="index2.html">Szczegóły produktu</a>
+        <a href="#">Kontakt</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
