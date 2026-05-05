@@ -13,7 +13,7 @@ import {
   startAfter
 } from "firebase/firestore";
 import { Db } from "@/lib/FirebaseClient";
-import { FetchBoardGames, NormalizeGame, ToNumber } from "@/lib/BoardGamesStorage";
+import { NormalizeGame, ToNumber } from "@/lib/BoardGamesStorage";
 
 const GamesCollectionName = "games";
 
@@ -275,49 +275,4 @@ export async function PlaceBid(GameId, BidAmount, CurrentUser)
       updatedAt: serverTimestamp()
     });
   });
-}
-
-export async function SeedGamesFromApi(CurrentUser)
-{
-  EnsureSignedIn(CurrentUser);
-
-  const ExistingQuery = query(GetGamesCollection(), limit(1));
-  const ExistingSnapshot = await getDocs(ExistingQuery);
-
-  if (!ExistingSnapshot.empty)
-  {
-    throw new Error("Firestore ma już dane. Nie importuję drugi raz.");
-  }
-
-  const Games = await FetchBoardGames();
-
-  const SaveTasks = Games.map(function SaveImportedGame(Game)
-  {
-    const Auction = Game.auction;
-
-    return addDoc(GetGamesCollection(), {
-      title: Game.title,
-      images: Game.images,
-      description: Game.description,
-      min_players: Game.min_players,
-      max_players: Game.max_players,
-      avg_play_time_minutes: Game.avg_play_time_minutes,
-      publisher: Game.publisher,
-      is_expansion: Game.is_expansion,
-      price_pln: Game.price_pln,
-      auction: Auction,
-      type: Game.type,
-      legacyId: Game.id,
-      ownerUid: CurrentUser.uid,
-      ownerEmail: CurrentUser.email,
-      isAvailable: true,
-      buyerUid: "",
-      buyerEmail: "",
-      soldAt: null,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
-  });
-
-  await Promise.all(SaveTasks);
 }

@@ -8,8 +8,7 @@ import GameFilters from "@/components/GameFilters";
 import Pagination from "@/components/Pagination";
 import {
   BuyGameNow,
-  GetGamesPage,
-  SeedGamesFromApi
+  GetGamesPage
 } from "@/lib/FirestoreGames";
 
 const ItemsPerPage = 10;
@@ -258,22 +257,6 @@ export default function BoardGameMarket()
     SetSortOrder("default");
   }
 
-  async function HandleSeedData()
-  {
-    SetErrorMessage("");
-
-    try
-    {
-      await SeedGamesFromApi(CurrentUser);
-      SetPageCursors([null]);
-      await LoadPage(0, null);
-    }
-    catch (Error)
-    {
-      SetErrorMessage(Error.message);
-    }
-  }
-
   async function HandleBuyNow(GameId)
   {
     SetErrorMessage("");
@@ -333,12 +316,6 @@ export default function BoardGameMarket()
                   Dodaj grę
                 </Link>
               )}
-
-              {CurrentUser && (
-                <button type="button" className="secondary-button" onClick={HandleSeedData}>
-                  Importuj przykładowe dane
-                </button>
-              )}
             </div>
           </div>
 
@@ -391,7 +368,7 @@ export default function BoardGameMarket()
           <section className="soft-card mt-6 p-8 text-center">
             <p className="text-2xl font-black">Brak ofert na tej stronie</p>
             <p className="mt-2 text-stone-500">
-              Zaimportuj dane albo zmień filtry.
+              Dodaj nową ofertę albo zmień filtry.
             </p>
           </section>
         )}
