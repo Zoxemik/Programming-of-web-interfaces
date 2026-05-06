@@ -10,6 +10,7 @@ export default function AuctionBox(Props)
 
   if (Props.Game)
   {
+	  
     Game = Props.Game;
   }
 
