@@ -54,6 +54,15 @@ export default function GameCard(Props)
     }
   }
 
+  function HandleFavoriteClick()
+  {
+    // Lab 5 change: this button lets the parent reducer add or remove the game from favorites.
+    if (Props.OnFavoriteToggle)
+    {
+      Props.OnFavoriteToggle(Game.id);
+    }
+  }
+
   return (
     <article className={ArticleClassName}>
       <div className="relative">
@@ -112,6 +121,14 @@ export default function GameCard(Props)
         </div>
 
         <div className="mt-5 grid gap-2">
+          <button
+            type="button"
+            className="secondary-button w-full"
+            onClick={HandleFavoriteClick}
+          >
+            {Props.IsFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych"}
+          </button>
+
           <Link href={`/games/${Game.id}`} className="secondary-button w-full">
             Szczegóły
           </Link>

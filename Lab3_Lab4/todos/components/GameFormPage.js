@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import AuthPanel from "@/components/AuthPanel";
 import { Auth } from "@/lib/FirebaseClient";
@@ -148,6 +148,8 @@ export default function GameFormPage(Props)
   const [IsLoading, SetIsLoading] = useState(true);
   const [ErrorMessage, SetErrorMessage] = useState("");
 
+  const DescriptionInputRef = useRef(null);
+
   useEffect(function SubscribeToAuth()
   {
     const Unsubscribe = onAuthStateChanged(Auth, function HandleAuthChange(User)
@@ -229,6 +231,15 @@ export default function GameFormPage(Props)
     });
   }
 
+  function FocusDescriptionInput()
+  {
+    // Lab 5 change: useRef lets us move the cursor straight to the description field when it needs attention.
+    if (DescriptionInputRef.current)
+    {
+      DescriptionInputRef.current.focus();
+    }
+  }
+
   function ValidateForm()
   {
     if (FormData.Title.trim().length === 0)
@@ -280,6 +291,12 @@ export default function GameFormPage(Props)
     if (ValidationMessage.length > 0)
     {
       SetErrorMessage(ValidationMessage);
+
+      if (FormData.Description.trim().length === 0)
+      {
+        FocusDescriptionInput();
+      }
+
       return;
     }
 
@@ -410,6 +427,7 @@ export default function GameFormPage(Props)
               <textarea
                 id="Description"
                 name="Description"
+                ref={DescriptionInputRef}
                 className="field-input min-h-36 resize-y"
                 value={FormData.Description}
                 onChange={HandleInputChange}

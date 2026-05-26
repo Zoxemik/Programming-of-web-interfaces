@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import AuthPanel from "@/components/AuthPanel";
 import GameCard from "@/components/GameCard";
 import GameFilters from "@/components/GameFilters";
@@ -12,6 +12,99 @@ import {
 } from "@/lib/FirestoreGames";
 
 const ItemsPerPage = 10;
+
+const FavoritesStorageKey = "board-game-market-favorites";
+
+function BuildEmptyFavoritesState()
+{
+  return {
+    GameIds: []
+  };
+}
+
+function LoadFavoritesFromLocalStorage()
+{
+  // Lab 5 change: favorites are restored from localStorage after refreshing the page.
+  if (typeof window === "undefined")
+  {
+    return BuildEmptyFavoritesState();
+  }
+
+  const SavedValue = window.localStorage.getItem(FavoritesStorageKey);
+
+  if (!SavedValue)
+  {
+    return BuildEmptyFavoritesState();
+  }
+
+  try
+  {
+    const ParsedValue = JSON.parse(SavedValue);
+
+    if (!Array.isArray(ParsedValue.GameIds))
+    {
+      return BuildEmptyFavoritesState();
+    }
+
+    return {
+      GameIds: ParsedValue.GameIds.map(function NormalizeGameId(GameId)
+      {
+        return String(GameId);
+      })
+    };
+  }
+  catch
+  {
+    return BuildEmptyFavoritesState();
+  }
+}
+
+function SaveFavoritesToLocalStorage(FavoritesState)
+{
+  // Lab 5 change: reducer state is saved locally in the browser.
+  if (typeof window === "undefined")
+  {
+    return;
+  }
+
+  window.localStorage.setItem(FavoritesStorageKey, JSON.stringify(FavoritesState));
+}
+
+function FavoritesReducer(State, Action)
+{
+  // Lab 5 change: reducer keeps all favorite offers logic in one clear place.
+  if (Action.Type === "load")
+  {
+    return Action.State;
+  }
+
+  if (Action.Type === "toggle")
+  {
+    const GameId = String(Action.GameId);
+    const AlreadyFavorite = State.GameIds.includes(GameId);
+
+    if (AlreadyFavorite)
+    {
+      return {
+        GameIds: State.GameIds.filter(function KeepOtherGameId(CurrentGameId)
+        {
+          return CurrentGameId !== GameId;
+        })
+      };
+    }
+
+    return {
+      GameIds: [...State.GameIds, GameId]
+    };
+  }
+
+  if (Action.Type === "clear")
+  {
+    return BuildEmptyFavoritesState();
+  }
+
+  return State;
+}
 
 export default function BoardGameMarket()
 {
@@ -29,6 +122,13 @@ export default function BoardGameMarket()
   const [SortOrder, SetSortOrder] = useState("default");
   const [IsLoading, SetIsLoading] = useState(true);
   const [ErrorMessage, SetErrorMessage] = useState("");
+
+  const [FavoritesState, DispatchFavorites] = useReducer(
+    FavoritesReducer,
+    BuildEmptyFavoritesState()
+  );
+
+  const [FavoritesLoaded, SetFavoritesLoaded] = useState(false);
 
   async function LoadPage(PageIndex, PageCursor)
   {
@@ -68,6 +168,28 @@ export default function BoardGameMarket()
     LoadPage(0, null);
   }, []);
 
+  useEffect(function LoadFavorites()
+  {
+    // Lab 5 change: we load favorites only in the browser, because localStorage does not exist on the server.
+    DispatchFavorites({
+      Type: "load",
+      State: LoadFavoritesFromLocalStorage()
+    });
+
+    SetFavoritesLoaded(true);
+  }, []);
+
+  useEffect(function SaveFavorites()
+  {
+    // Lab 5 change: after loading, every reducer state change is saved in localStorage.
+    if (!FavoritesLoaded)
+    {
+      return;
+    }
+
+    SaveFavoritesToLocalStorage(FavoritesState);
+  }, [FavoritesState, FavoritesLoaded]);
+
   const Types = useMemo(function BuildTypes()
   {
     const UniqueTypes = new Set();
@@ -100,6 +222,7 @@ export default function BoardGameMarket()
 
   const FilteredGames = useMemo(function BuildFilteredGames()
   {
+    // Lab 5 change: filtering and sorting are memoized, so they only recalculate when the data or filters change.
     const SearchQuery = SearchText.trim().toLowerCase();
 
     let Result = Games.filter(function CheckGameVisibility(Game)
@@ -211,6 +334,15 @@ export default function BoardGameMarket()
     SortOrder
   ]);
 
+  const FavoriteGamesOnCurrentPage = useMemo(function BuildFavoriteGamesOnCurrentPage()
+  {
+    // Lab 5 change: this small list is also memoized, because it depends only on games and favorite ids.
+    return Games.filter(function CheckFavoriteGame(Game)
+    {
+      return FavoritesState.GameIds.includes(Game.id);
+    });
+  }, [Games, FavoritesState.GameIds]);
+
   function HandleSearchTextChange(Event)
   {
     SetSearchText(Event.target.value);
@@ -255,6 +387,23 @@ export default function BoardGameMarket()
     SetAuctionFilter("all");
     SetPlayerFilter("all");
     SetSortOrder("default");
+  }
+
+  function HandleFavoriteToggle(GameId)
+  {
+    // Lab 5 change: the component does not change favorites directly, it sends an action to the reducer.
+    DispatchFavorites({
+      Type: "toggle",
+      GameId: GameId
+    });
+  }
+
+  function HandleClearFavorites()
+  {
+    // Lab 5 change: one reducer action clears all locally saved favorites.
+    DispatchFavorites({
+      Type: "clear"
+    });
   }
 
   async function HandleBuyNow(GameId)
@@ -328,6 +477,48 @@ export default function BoardGameMarket()
           </div>
         )}
 
+        <section className="soft-card mb-6 p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-black uppercase tracking-wide text-stone-500">
+                Ulubione z localStorage
+              </p>
+
+              <p className="mt-1 text-2xl font-black text-stone-950">
+                {FavoritesState.GameIds.length} zapisanych ofert
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={HandleClearFavorites}
+              disabled={FavoritesState.GameIds.length === 0}
+            >
+              Wyczyść ulubione
+            </button>
+          </div>
+
+          {FavoriteGamesOnCurrentPage.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {FavoriteGamesOnCurrentPage.map(function RenderFavoriteGame(Game)
+              {
+                return (
+                  <span key={Game.id} className="tiny-pill bg-amber-50 text-amber-800">
+                    {Game.title}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+
+          {FavoriteGamesOnCurrentPage.length === 0 && FavoritesState.GameIds.length > 0 && (
+            <p className="mt-4 text-sm font-bold text-stone-500">
+              Masz zapisane ulubione oferty, ale nie ma ich na aktualnej stronie wyników.
+            </p>
+          )}
+        </section>
+
         <GameFilters
           SearchText={SearchText}
           OnSearchTextChange={HandleSearchTextChange}
@@ -382,6 +573,8 @@ export default function BoardGameMarket()
                   key={Game.id}
                   Game={Game}
                   CurrentUser={CurrentUser}
+                  IsFavorite={FavoritesState.GameIds.includes(Game.id)}
+                  OnFavoriteToggle={HandleFavoriteToggle}
                   OnBuyNow={HandleBuyNow}
                 />
               );
